@@ -322,6 +322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1951174736}
+  minHeight: -1.5
+  maxHeight: 2.5
+  farBackground: {fileID: 270509996}
+  middleBackground: {fileID: 99542106}
 --- !u!1 &603077681
 GameObject:
   m_ObjectHideFlags: 0
