@@ -1052,6 +1052,7 @@ GameObject:
   - component: {fileID: 1951174737}
   - component: {fileID: 1951174738}
   - component: {fileID: 1951174739}
+  - component: {fileID: 1951174740}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1119,7 +1120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951174734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.22, y: -2.92, z: 0}
+  m_LocalPosition: {x: -2.22, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1177,9 +1178,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7.5
-  jumpForce: 15
+  jumpForce: 12
   rigidBody: {fileID: 1951174737}
   groundPoint: {fileID: 2029886063}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!95 &1951174740
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951174734}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 46be592914663cc49b212796b2815642, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1963066401
 GameObject:
   m_ObjectHideFlags: 0
