@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,8 @@ public class UIController : MonoBehaviour
 
     public Image heart1, heart2, heart3;
     public Sprite heartFull,heartHalf, heartEmpty;
-
+    public TextMeshProUGUI gemCounter;
+    
     private void Awake()
     {
         instance = this;
@@ -30,7 +32,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateHealthDisplay()
     {
-        int currentHealth = PlayerHealthController.instance.getCurrentHealth();
+        int currentHealth = PlayerHealthController.instance.GetCurrentHealth();
         heart1.sprite = heartEmpty;
         heart2.sprite = heartEmpty;
         heart3.sprite = heartEmpty;
@@ -40,5 +42,10 @@ public class UIController : MonoBehaviour
         if (currentHealth >= 4) heart2.sprite = heartFull;
         if (currentHealth >= 5) heart3.sprite = heartHalf;
         if (currentHealth >= 6) heart3.sprite = heartFull;
+    }
+
+    public void UpdateGemCount()
+    {
+        gemCounter.text = LevelManager.instance.gemsCollected.ToString();
     }
 }

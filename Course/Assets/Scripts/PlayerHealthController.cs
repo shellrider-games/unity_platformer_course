@@ -20,7 +20,7 @@ public class PlayerHealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        ResetHealthToMaxHealth();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         invulFlicker = false;
     }
@@ -73,12 +73,33 @@ public class PlayerHealthController : MonoBehaviour
         _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g,
             _spriteRenderer.color.b, 0.6f);
         invulFlicker = false;
-        if(currentHealth <= 0) gameObject.SetActive(false);
+        if (currentHealth <= 0)
+        {
+            _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g,
+                _spriteRenderer.color.b, 1.0f);
+            LevelManager.instance.RespawnPlayer();
+        }
+        UIController.instance.UpdateHealthDisplay();
+        PlayerController.instance.KnockBack();
+    }
+
+    public void HealPlayer()
+    {
+        currentHealth = Math.Min(currentHealth + 2, maxHealth);
         UIController.instance.UpdateHealthDisplay();
     }
 
-    public int getCurrentHealth()
+    public int GetCurrentHealth()
     {
         return currentHealth;
+    }
+
+    public void ResetHealthToMaxHealth()
+    {
+        currentHealth = maxHealth;
+        invulCounter = 0.0f;
+        invulFlickerCounter = 0.0f;
+        invulFlicker = false;
+        UIController.instance.UpdateHealthDisplay();
     }
 }

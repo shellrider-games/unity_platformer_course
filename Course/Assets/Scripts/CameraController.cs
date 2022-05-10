@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     public float minHeight, maxHeight;
     public float minX, maxX;
 
+
     public Transform farBackground, middleBackground;
     // Start is called before the first frame update
     void Start()
@@ -25,4 +26,6 @@ public class CameraController : MonoBehaviour
         farBackground.position = new Vector3(farBackground.position.x + (transform.position.x - lastPosition.x), farBackground.position.y + (transform.position.y - lastPosition.y) * 0.9f, farBackground.position.z);
         middleBackground.position = new Vector3(middleBackground.position.x + (transform.position.x - lastPosition.x) * 0.6f, middleBackground.position.y + (transform.position.y - lastPosition.y) * 0.7f, middleBackground.position.z);
     }
+
+
 }
