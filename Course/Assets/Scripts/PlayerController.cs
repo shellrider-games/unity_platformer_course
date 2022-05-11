@@ -20,8 +20,10 @@ public class PlayerController : MonoBehaviour
     public float knockBackDuration, knockBackForce;
     private float knockBackCounter;
 
-    private Animator anim;
+    public Animator anim;
     private SpriteRenderer spriteRenderer;
+
+    public bool stopInput;
 
     private void Awake()
     {
@@ -39,45 +41,49 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PauseMenu.instance.isPaused) return;
-        if (knockBackCounter <= 0)
+        if (!(PauseMenu.instance.isPaused || stopInput))
         {
-            rigidBody.velocity = new Vector2(moveSpeed * Input.GetAxis("Horizontal"), rigidBody.velocity.y);
-            isOnGround = Physics2D.OverlapCircle(groundPoint.position, 0.1f, whatIsGround);
-            if (isOnGround)
+            if (knockBackCounter <= 0)
             {
-                doubleJump = true;
-            }
-
-            if ((isOnGround || doubleJump) && Input.GetButtonDown("Jump"))
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-                AudioManager.instance.playSFX(10);
-                if (!isOnGround)
+                rigidBody.velocity = new Vector2(moveSpeed * Input.GetAxis("Horizontal"), rigidBody.velocity.y);
+                isOnGround = Physics2D.OverlapCircle(groundPoint.position, 0.1f, whatIsGround);
+                if (isOnGround)
                 {
-                    doubleJump = false;
+                    doubleJump = true;
                 }
+
+                if ((isOnGround || doubleJump) && Input.GetButtonDown("Jump"))
+                {
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+                    AudioManager.instance.playSFX(10);
+                    if (!isOnGround)
+                    {
+                        doubleJump = false;
+                    }
+                }
+                if (rigidBody.velocity.x < 0) spriteRenderer.flipX = true;
+                if (rigidBody.velocity.x > 0) spriteRenderer.flipX = false;
             }
-            if (rigidBody.velocity.x < 0) spriteRenderer.flipX = true;
-            if (rigidBody.velocity.x > 0) spriteRenderer.flipX = false;
-        }
-        else
-        {
-            knockBackCounter = Mathf.Max(0.0f, knockBackCounter - Time.deltaTime);
-            int dirFactor = 1;
-            if (!spriteRenderer.flipX)
+            else
             {
-                dirFactor = -1;
+                knockBackCounter = Mathf.Max(0.0f, knockBackCounter - Time.deltaTime);
+                int dirFactor = 1;
+                if (!spriteRenderer.flipX)
+                {
+                    dirFactor = -1;
+                }
+                rigidBody.velocity = new Vector2(dirFactor*knockBackForce, rigidBody.velocity.y);
+                if(knockBackCounter <= 0) anim.SetBool("hurt", false);
             }
-            rigidBody.velocity = new Vector2(dirFactor*knockBackForce, rigidBody.velocity.y);
-            if(knockBackCounter <= 0) anim.SetBool("hurt", false);
+            if(transform.position.y <= LevelManager.instance.killYPos) LevelManager.instance.RespawnPlayer();
         }
+        
 
         //Set properties for animator
         anim.SetFloat("xSpeed", Math.Abs(rigidBody.velocity.x));
         anim.SetFloat("ySpeed", rigidBody.velocity.y);
         
-        if(transform.position.y <= LevelManager.instance.killYPos) LevelManager.instance.RespawnPlayer();
+        
     }
     
     public void KnockBack()

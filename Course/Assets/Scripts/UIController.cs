@@ -12,6 +12,12 @@ public class UIController : MonoBehaviour
     public Image heart1, heart2, heart3;
     public Sprite heartFull,heartHalf, heartEmpty;
     public TextMeshProUGUI gemCounter;
+
+    public Image fadeScreen;
+    public float fadeSpeed;
+    public bool shouldFadeToBlack, shouldFadeFromBlack;
+
+    public GameObject levelCompleteText;
     
     private void Awake()
     {
@@ -21,13 +27,31 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        shouldFadeFromBlack = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (shouldFadeToBlack)
+        {
+            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b,
+                Mathf.MoveTowards(fadeScreen.color.a, 1f, fadeSpeed * Time.deltaTime));
+            if (fadeScreen.color.a == 1f)
+            {
+                shouldFadeToBlack = false;
+            }
+        }
+
+        if (shouldFadeFromBlack)
+        {
+            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b,
+                Mathf.MoveTowards(fadeScreen.color.a, 0f, fadeSpeed * Time.deltaTime));
+            if (fadeScreen.color.a == 0f)
+            {
+                shouldFadeFromBlack = false;
+            }
+        }
     }
 
     public void UpdateHealthDisplay()
@@ -48,4 +72,6 @@ public class UIController : MonoBehaviour
     {
         gemCounter.text = LevelManager.instance.gemsCollected.ToString();
     }
+
+
 }

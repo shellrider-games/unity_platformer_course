@@ -5,13 +5,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+    
     public Transform target;
     public float minHeight, maxHeight;
     public float minX, maxX;
+    public bool stopFollow;
 
 
     public Transform farBackground, middleBackground;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         
@@ -20,6 +28,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(stopFollow) return;
         Vector3 lastPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         transform.position = new Vector3(Mathf.Clamp(target.position.x,minX,maxX), Mathf.Clamp(target.position.y,minHeight,maxHeight), transform.position.z);
         
