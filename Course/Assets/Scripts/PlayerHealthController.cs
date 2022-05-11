@@ -83,6 +83,7 @@ public class PlayerHealthController : MonoBehaviour
             LevelManager.instance.RespawnPlayer();
         }
         UIController.instance.UpdateHealthDisplay();
+        AudioManager.instance.playSFX(9);
         PlayerController.instance.KnockBack();
     }
 

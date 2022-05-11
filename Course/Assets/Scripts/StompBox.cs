@@ -26,6 +26,7 @@ public class StompBox : MonoBehaviour
             Instantiate(deathEffect, other.transform.position, other.transform.rotation);
             
             PlayerController.instance.Bounce();
+            AudioManager.instance.playSFX(3);
         }
     }
 }

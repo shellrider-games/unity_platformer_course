@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
             if ((isOnGround || doubleJump) && Input.GetButtonDown("Jump"))
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+                AudioManager.instance.playSFX(10);
                 if (!isOnGround)
                 {
                     doubleJump = false;
