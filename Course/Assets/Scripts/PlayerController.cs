@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     
     public float moveSpeed;
     public float jumpForce;
+    public float bounceForce;
     public Rigidbody2D rigidBody;
     public Transform groundPoint;
     public LayerMask whatIsGround;
@@ -93,5 +94,10 @@ public class PlayerController : MonoBehaviour
     {
         knockBackCounter = 0.0f;
         anim.SetBool("hurt", false);
+    }
+
+    public void Bounce()
+    {
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, bounceForce);
     }
 }

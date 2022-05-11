@@ -16,6 +16,8 @@ public class PlayerHealthController : MonoBehaviour
     public float invulFlickerTime;
     private float invulFlickerCounter;
 
+    public GameObject deathEffect;
+
     private SpriteRenderer _spriteRenderer;
     // Start is called before the first frame update
     void Start()
@@ -77,6 +79,7 @@ public class PlayerHealthController : MonoBehaviour
         {
             _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g,
                 _spriteRenderer.color.b, 1.0f);
+            Instantiate(deathEffect, transform.position, transform.rotation);
             LevelManager.instance.RespawnPlayer();
         }
         UIController.instance.UpdateHealthDisplay();
